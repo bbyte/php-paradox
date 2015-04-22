@@ -1,0 +1,17 @@
+// $Id: config.w32,v 1.3 2007/10/24 13:39:36 steinm Exp $
+// vim:ft=javascript
+
+ARG_WITH("paradox", "Include Paradox support", "no");
+
+if (PHP_PARADOX != "no") {
+	if (CHECK_LIB("pxlib.lib", "paradox", PHP_PARADOX) &&
+			CHECK_HEADER_ADD_INCLUDE("paradox.h", "CFLAGS_PARADOX", PHP_PARADOX )) {
+
+		EXTENSION("paradox", "paradox.c");
+
+		AC_DEFINE('HAVE_PARADOX', 1, 'Have Paradox library');
+		ADD_FLAG('CFLAGS_PARADOX', "/D HAVE_PARADOX ");
+	} else {
+		WARNING("paradox not enabled; libraries and headers not found");
+	}
+}
